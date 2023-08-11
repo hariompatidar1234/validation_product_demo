@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_052117) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_060300) do
   create_table "categories_products", id: false, force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "category_id", null: false
@@ -21,11 +21,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_052117) do
     t.string "auther"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "customers_products", id: false, force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "product_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_create_books_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -34,8 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_052117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "product_number"
-    t.decimal "price"
-    t.integer "user_id", null: false
+    t.integer "user_id"
+    t.index ["product_number"], name: "index_products_on_product_number"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
@@ -46,5 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_052117) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "create_books", "users"
   add_foreign_key "products", "users"
 end
